@@ -1,4 +1,7 @@
+from random import randint
+
 from pico2d import *
+import random
 
 # Game object class here
 class Grass:
@@ -11,8 +14,8 @@ class Grass:
 
 class Boy:
     def __init__(self):
-        self.x, self.y = 0, 90
-        self.frame = 0
+        self.x, self.y = randint(50, 700), 90
+        self.frame = randint(0, 7)
         self.image = load_image('run_animation.png')
     def update(self):
         self.frame = (self.frame + 1) % 8
@@ -33,20 +36,22 @@ def handle_events():
 def reset_world():
     global running
     global grass
-    global boy
+    global team
 
     running = True
     grass = Grass()
-    boy = Boy()
+    team = [Boy() for i in range(11)]
 def update_world():
     grass.update() #객체 상태 시뮬레이션
-    boy.update()
+    for boy in team:
+        boy.update()
     pass
 
 def render_world():
     clear_canvas()
     grass.draw()
-    boy.draw()
+    for boy in team:
+        boy.draw()
     update_canvas()
     pass
 running = True
